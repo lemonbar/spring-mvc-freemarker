@@ -9,14 +9,13 @@
  */
 package com.lemon.spring.controller;
 
+import com.lemon.spring.domain.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,8 +31,10 @@ public class GreetingController {
     }
 
     @RequestMapping(value = "/greeting", method = RequestMethod.POST)
-    public ModelAndView greeting(@RequestParam("user") String user) {
-        List<String> userList = Arrays.asList(user.split("-"));
+    public ModelAndView greeting(@ModelAttribute("user") User user) {
+        List<String> userList = new ArrayList<String>();
+        userList.add(user.getFirstName());
+        userList.add(user.getLastName());
         ModelAndView result = new ModelAndView("welcome");
         //userList is the variable name, used in ftl file.
         result.addObject("userList", userList);
